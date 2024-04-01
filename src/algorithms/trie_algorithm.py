@@ -1,28 +1,30 @@
 class Node:
     def __init__(self):
         self.children = {}
-        self.value = None #nuotti
+        self.note = None #nuotti
         self.weight = 0
+        self.value = False
 
 
 class Trie:
     def __init__(self):
         self.root = Node()
 
-    def insert(self, notes, notes_list):
+    def insert(self, notes_list):
         node = self.root
+        print(node, "self_root")
         print(notes_list, "notes_list")
         for note in notes_list:
             print(note, "testi")
-            if note not in node.children: #onko nuotti jo solmun lapsissa
-                node.children[note] = Node() #{} tänne node.children listaan nuotti
-                node.children[note].weight += 1
-            else:
-                node.children[note].weight += 1 #paino
-                print(node.children[note].weight, "painotukset")
-            node = node.children[note] 
-        if node.value is None: #tässä mitä tulee keyn jälkeen
-            node.value = False
+            if note not in node.children: #onko nuotti jo eka root.noden lapsissa
+                node.children[note] = Node() 
+
+                print(node.children[note] ,"uusi lapsi")
+            node = node.children[note]
+            node.weight += 1
+            print(node.weight,"uuden lapsen paino")
+
+        node.value = True
 
     def print_trie(self, node=None, depth=0):
         if node is None:
@@ -43,8 +45,11 @@ class Trie:
         return node.value if node else None
 
 trie = Trie()
-notes_list = "cbeafgcacb" 
-trie.insert("c", notes_list)  
+notes_list = "cbeaf" 
+trie.insert(notes_list)  
+trie.print_trie()
+notes_list2 = "cbeafaa"
+trie.insert(notes_list2) 
 trie.print_trie()
 trie.search("cbeafgcacb")
 #tämä vielä isosti kesken!
