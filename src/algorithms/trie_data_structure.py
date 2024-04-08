@@ -16,7 +16,7 @@ class Trie:
         print(notes_list, "notes_list")
         for note in notes_list:
             print(note, "testi")
-            if note not in node.children: #onko nuotti jo eka root.noden lapsissa
+            if note not in node.children:
                 node.children[note] = Node() 
 
                 print(node.children[note] ,"uusi lapsi")
@@ -33,24 +33,52 @@ class Trie:
             print("  " * depth + str(pair) + " -> " + str(child_node.value) + " (Weight: " + str(child_node.weight) + ")")
             self.print_trie(child_node, depth + 1)
 
-    def search(self, notes): #ehkä turha
-        #print(notes) #cb mitä syötetään
+    def search(self, notes):
         node = self.root
+        list_of_frequences = []
+        list_of_keys = []
+        list_of_children = {}
         for note in notes:
-            print(note)
             if note not in node.children:
                 return None
             node = node.children[note]
-            print(node.children, "tässä lapsi")
-        return node.value if node else None
+        list_of_children.update(node.children)
+        for i in list_of_children:
+            list_of_frequences.append(list_of_children[i].weight)
+        for i in list_of_children.keys():
+            list_of_keys.append(i)
+        tuple = (list_of_keys, list_of_frequences)
+        print("TÄTÄ SEARCH PALAUTTAA", tuple) #palauttaa lapset ja niiden painot
+
+        return tuple
+
+    def add_to_trie(self, notes_data, degree):
+        for i in range(len(notes_data)-1):
+            if i < len(notes_data) -1 :
+                Trie().insert(notes_data[i:i+degree]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
+            else:
+                break
+
+
+#nuotit pitää vielä muuttaa numeroiksi
 
 trie = Trie()
-notes_list = "cbeaf" 
+notes_list = "cbeafcg" 
 trie.insert(notes_list)  
-trie.print_trie()
-notes_list2 = "cbeafaa"
+notes_list2 = "cbcafaa"
 trie.insert(notes_list2) 
 trie.print_trie()
-trie.search("cbeafgcacb")
-#tämä vielä isosti kesken!
+
+trie.search("cb")
+
+
+#Miten eri sävellajeille saadaan eri Triet?
+#Trie tyhjennetään välissä
+#UI: käyttäjä valitsee sävellajin....ja tällöin Trie muodostuu sen
+#sävellajin kappaleista
+#kun käyttäjä valitsee toisen sävellajin Trie puhdistuu ja muodostuu sen sävellajin kappaleista
+
+    
+
+
 
