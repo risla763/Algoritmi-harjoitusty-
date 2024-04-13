@@ -15,7 +15,7 @@ class MarkovChain:
         print("current_notes", current_notes)
 
         for _ in range(length):
-            next_note = self._get_next_note(current_notes) #NUOTIT parametrina joiden perusteella etsitään 
+            next_note = self._get_next_note(current_notes) #nuotit parametrina joiden perusteella etsitään 
             sequence.append(next_note) #next_note on note mitä get_next_note palauttaa
             current_notes.pop(0)
             current_notes.append(next_note)
@@ -27,10 +27,10 @@ class MarkovChain:
         if possible_next_notes:
             total_weight = sum(possible_next_notes.values())
             rand_val = random.uniform(0, total_weight)
-            cumulative_weight = 0
+            weight = 0
             for note, weight in possible_next_notes.items():
-                cumulative_weight += weight
-                if rand_val <= cumulative_weight:
+                weight += weight
+                if rand_val <= weight:
                     return note
         else:
             return None

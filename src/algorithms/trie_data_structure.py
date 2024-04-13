@@ -12,17 +12,12 @@ class Trie:
 
     def insert(self, notes_list):
         node = self.root
-        print(node, "self_root")
-        print(notes_list, "notes_list")
         for note in notes_list:
-            print(note, "testi")
             if note not in node.children:
                 node.children[note] = Node() 
-
-                print(node.children[note] ,"uusi lapsi")
             node = node.children[note]
             node.weight += 1
-            print(node.weight,"uuden lapsen paino")
+
 
         node.value = True
 
