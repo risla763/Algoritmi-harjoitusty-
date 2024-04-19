@@ -20,48 +20,91 @@ with open(file) as file:
     else:
         print(f"File '{test_song}' not found.")
 
-list = []
+filtered_song5 = []
 for i in filtered_song4:
-    list.append(i)
-print(list)
+    filtered_song5.append(i)
+print(filtered_song5)
 
-for i in filtered_song4: #tämä on kesken ja tämän pointti olisi voida muuttaa listassa olevat nuotit numeroiksi ja tehdä uusi lista
-    if i == "'": #jos toinen oktaavi esim 'c
-        continue
-    elif filtered_song4[i+1] == "'": #jos toinen oktaavi ja nuotti!
-        if filtered_song4[i-1] == "^": #ylennetty tokan oktaavin nuotti
-            i = ord(i) + 200
-        elif filtered_song4[i-1] == "_": #alennettu tokan oktaavin nuotti
-            i = ord(i) + 200 + 200
-        else:                   #normi tokan oktaavin nuotti
-            i = ord(i) + 200 + 300
-    elif i is char.isupper():
-        if filtered_song4[i-1] == "^": #ylennetty alemman oktaavin nuotti
-            i = ord(i) -200
-        elif filtered_song4[i-1] == "_": #alennettu tokan oktaavin nuotti
-            i = ord(i) - 200 - 200
-        else:                   #normi alennetun oktaavin nuotti
-            i = ord(i) - 200 - 300 #jos yksi oktaavi alempana
-    elif i == '(' or ')' or '/n': #turhaa karsitaan
-        break
-    elif i == "^": #ylennys
-        continue
-    elif filtered_song4[i-1] == "^": #ylennyksestä nuotti
-        i = ord(i) + 100
-    elif filtered_song4[i-1] == "_": #ylennyksestä nuotti
-        i = ord(i) - 100
-    elif i == ':': #laulun alku
-        i = 1000
-    elif i == ']': #laulun loppu
-        i = 2000
-    else:           #normi nuotti
-        i = ord(i)
-        
-    #ylennys,alennus,palutus merkit yhteen alkioon, suluissa oleva pois,
-    #  : biisin aloitus yhdessä alkiossa, ] biisin lopetus yhdessä alkiossa
-    # jos on /n älä lisää
-    list.append(i)
-print(list)
+class NumericalNotes:
+
+    def __init__(self):
+        self.mapping = {'C': 1, 'D': 2, 'E': 3, 'F': 4, 'G': 5, 'A': 6, 'B': 7,
+            'c': 11, 'd': 12, 'e': 13, 'f': 14, 'g': 15, 'a': 16, 'b': 17,
+        }
+
+    def match_note_to_a_number(self, note, index, lista,filtered_song4):
+        for index, note in enumerate(filtered_song5):
+            print("nuotti", note)
+            print("indexi", index)
+            if note == '^':
+                    #kutsuu ylennys metodia
+                    self.next_note_is_sharp(filtered_song4,note, index, lista)
+            elif note == '_':
+                    #kutsuu alennus metodia
+                    self.next_note_is_flat(filtered_song4,note, index, lista)
+            elif note == '=':
+                    #kutsuu palautus metodia
+                    self.next_note_is_returned(filtered_song4,note, index, lista)
+            elif note == "'":
+                    #jos nuotti on kolmannessa oktaavissa
+                    self.previous_note_is_in_third_oktave(filtered_song4,note, index, lista)
+            elif note == '(' or note == ')': #ignooraa nämä
+                    continue
+            elif note == '\n': #ignooraa
+                    continue
+            elif note == ':':  # biisin alku
+                    continue
+            elif note == ']':  # biisin loppu
+                    lista.append(2000)
+            else:
+                    #perus nuotti eli iso kirjain tai pieni kirjain
+                    note = self.mapping.get(note, 0)
+                    lista.append(note) #lisää perus nuotti listaan
+
+        return lista
+
+    def previous_note_is_in_third_oktave(self,filtered_song4,note, index, lista):
+        lista[index-1] += 20 #muuta edellinen nuotti + 20 (suoraan listassa)
+        index += 1 #seuraava indexi
+        self.match_note_to_a_number(note,index,lista)
+
+
+    def next_note_is_sharp(self,filtered_song4,note, index, lista):
+        print("tässä indexi," ,index)
+        note = filtered_song4[index+1] #seuraava nuotti ^merkin jälkeen
+        extra_case_value = 100 #seuraava nuotti on nuotti + 100 koska ylennys
+        self.match_note_to_a_number_in_list(note,index,extra_case_value,lista)
+
+    def next_note_is_flat(self,filtered_song4,note, index, lista):
+        note = filtered_song4[index+1] #seuraava nuotti _merkin jälkeen
+        extra_case_value = 200 #seuraava nuotti on nuotti + 200 koska alennus
+        self.match_note_to_a_number_in_list(note,index,extra_case_value,lista)
+
+    def next_note_is_returned(self,lista,filtered_song4, note, index):
+        note = filtered_song4[index+1] #seuraava nuotti = merkin jälkeen
+        extra_case_value = 0 #seuraava nuotti on nuotti + 0 koska palautettu eli mitään ei tapahdu
+        self.match_note_to_a_number_in_list(note,index,extra_case_value,lista)
+
+    def match_note_to_a_number_in_list(self,note,index,extra_case_value,lista):
+        note = self.mapping.get(note, 0) #hakee seuraavan nuotin arvon
+        note + extra_case_value
+        lista.append(note) #lopullinen lista jossa numerot
+        index += 2 #indexi hyppää erikoismerkin ja sitä seuraavan nuotin yli
+        note = filtered_song4[index] #seuraava nuotti
+        #self.match_note_to_a_number(note, index, lista, filtered_song4) #kutsuu uusilla notella ja indexillä
+
+        #kolmas oktaavi
+lista=[]
+filtered_song5 = []
+for i in filtered_song4:
+    filtered_song5.append(i)
+print(filtered_song5)
+print(NumericalNotes().match_note_to_a_number(0,0,[],filtered_song5))
+
+#MITEN BIISIN LOPPU VAIKUTTAA KAIKKEEN?? monta kertaa 2000 esiintyy...
+# kun lisätään puuhun niin kun biisin loppu se node loppuu ja alkaa taas...
+
+
 
 #^ylennys
 #_ alennus
