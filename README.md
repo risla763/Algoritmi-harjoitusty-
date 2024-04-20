@@ -10,3 +10,5 @@
 [Viikkoraportti 3](https://github.com/risla763/tiralabra/blob/main/docs/viikkoraportti_3.md)
 
 [Viikkoraportti 4](https://github.com/risla763/tiralabra/blob/main/docs/viikkoraportti_4.md)
+
+[Viikkoraportti 5](https://github.com/risla763/tiralabra/blob/main/docs/viikkoraportti_5.md)
