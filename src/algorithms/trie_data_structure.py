@@ -29,6 +29,7 @@ class Trie:
             self.print_trie(child_node, depth + 1)
 
     def search(self, notes):
+        print("vittu lol", notes)
         node = self.root
         list_of_frequences = []
         list_of_keys = []
@@ -50,22 +51,15 @@ class Trie:
     def add_to_trie(self, notes_data, degree):
         for i in range(len(notes_data)-1):
             if i < len(notes_data) -1 :
-                Trie().insert(notes_data[i:i+degree]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
+                self.insert(notes_data[i:i+degree]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
             else:
                 break
 
 
 #nuotit pitää vielä muuttaa numeroiksi
-
-trie = Trie()
-notes_list = "cbeafcg" 
-trie.insert(notes_list)  
-notes_list2 = "cbcafaa"
-trie.insert(notes_list2) 
-trie.print_trie()
-
-trie.search("cb")
-
+#trie = Trie()
+#trie.insert("1234")
+#trie.search("1")
 
 #Miten eri sävellajeille saadaan eri Triet?
 #Trie tyhjennetään välissä
