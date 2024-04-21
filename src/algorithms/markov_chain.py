@@ -32,34 +32,16 @@ class MarkovChain:
 
     def add_data_to_trie(self, notes_data, degree): #tähän vielä pitää tulla se miten dataa lisätään kun 2000 eli biisin loppu??
         for i in range(len(notes_data)-1):
-            print(i,"lol", degree)
+            #print(i,"lol", degree)
             if i < len(notes_data) -1 :
+                #print("kolmen setti joka laitetaan",notes_data[i:i+int(degree)])
                 self.trie.insert(notes_data[i:i+int(degree)]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
             else:
                 break
 
     def generate_music(self, length, degree):
-        print(self.trie.print_trie())
-        print(self.trie.search("3"))
-        result = self.trie.search("3")
-        if result:
-            list_of_keys, list_of_frequencies = result
-            total_weight = sum(list_of_frequencies)
-            print(f"Total weight: {total_weight}")
-            if total_weight > 0:
-                rand_val = random.uniform(0, total_weight)
-                weight = 0
-                for note, freq in zip(list_of_keys, list_of_frequencies):
-                    weight += freq
-                    if rand_val <= weight:
-                        print(f"Selected note: {note}")
-                        break
-        else:
-            print("No notes found.")
-        #print(self.trie.print_trie())
-        print(self.trie.search("3"), "testi")
         print(list(self.trie.root.children.values()))
-        first_note = random.choice(list(self.trie.root.children.values()))
+        first_note = random.choice(list(self.trie.root.children.values())) #TOIMII
         print(f"Eka nuotti {first_note.note}")
 
 

@@ -17,9 +17,12 @@ class Trie:
                 node.children[note] = Node() 
             node = node.children[note]
             node.weight += 1
+            node.note = note
+            print("tämä laitettiin triehen", node.note)
 
 
         node.value = True
+        
 
     def print_trie(self, node=None, depth=0):
         if node is None:
@@ -29,7 +32,7 @@ class Trie:
             self.print_trie(child_node, depth + 1)
 
     def search(self, notes):
-        print("vittu lol", notes)
+        print("täsä meni search metodiin", self.root.children.items())
         node = self.root
         list_of_frequences = []
         list_of_keys = []
