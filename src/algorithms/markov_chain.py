@@ -30,19 +30,41 @@ class MarkovChain:
         #käyttäjä valitsee pituuden
         self.generate_music(lenght,degree)
 
-    def add_data_to_trie(self, notes_data, degree): #tähän vielä pitää tulla se miten dataa lisätään kun 2000 eli biisin loppu??
+    def add_data_to_trie(self, notes_data, degree): #!!!tähän vielä pitää tulla se miten dataa lisätään kun 2000 eli biisin loppu??
         for i in range(len(notes_data)-1):
             #print(i,"lol", degree)
             if i < len(notes_data) -1 :
-                #print("kolmen setti joka laitetaan",notes_data[i:i+int(degree)])
+                #print("kolmen setti joka laitetaan",notes_data[i:i+int(degree)]) NÄMÄ KOLME KERRALLAAN SEARCHIIN
                 self.trie.insert(notes_data[i:i+int(degree)]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
             else:
                 break
 
     def generate_music(self, length, degree):
+        song = []
         print(list(self.trie.root.children.values()))
         first_note = random.choice(list(self.trie.root.children.values())) #TOIMII
         print(f"Eka nuotti {first_note.note}")
+        current = first_note #hyvä...
+        song.append(current.note)
+        #tähän se että jos degree on x niin x verran niitä lapsia current_nodesta listaan
+        for i in range(int(degree)-1): #tässä looppaa listaan degreen verran nuotteja
+            next_note = random.choice(list(current.children.values()))
+            song.append(next_note.note)
+            current = next_note
+            print("lol", current.note) #TÄHÄN VIELÄ JOS SOLMULLA EI LAPSIA NIIN SEN EKan nuOTIN PITÄÄ OLLA SOLMU JOLLA DEGREEN VERRAN LAPSIA
+        #Tässä oikea markovin ketju voi alkaa
+        #TÄHÄN TULEE SEARCH METODI TRIESTÄ
+        for i in range(int(length) -1):
+            notes_data_that_search = song[-int(degree):-1] #laulun lopusta asteen verran  (aina lisätään 1, joten järjestyksen pitäisi pysyä)
+            data_for_generating_next = self.trie.search(notes_data_that_search)
+            #ylemmän pitäisi olla tuple nuotteja ja painoja mitä sitten??
+            print("data seuraavaan nuotit:",data_for_generating_next[0])
+            print("data seuraavaan painot:",data_for_generating_next[1])
+            next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
+            print(next_note)
+            song.append(next_note)
+
+
 
 
 
