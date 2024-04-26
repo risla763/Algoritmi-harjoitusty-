@@ -31,7 +31,19 @@ class MarkovChain:
         for i in range(number_of_songs):
             #tähän lista biisejä
             song = input("Choose one song from songs:")
-            list_of_songs.append(song)
+            if song == "3":
+                song = "src/data/HavaNagila.abc"
+                list_of_songs.append(song)
+            if song == "2":
+                song = "src/data/The_Musical_Priest.abc"
+                list_of_songs.append(song)
+            if song == "1":
+                song = "src/data/Catherine_Ogie.abc"
+                list_of_songs.append(song)
+            if song == "4":
+                song = "src/data/Bung_your_eyes.abc"
+                list_of_songs.append(song)
+            
         notes_data = self.numerical_data.parse_songs(list_of_songs)
         #tässä kutsutaan omaa luokkaansa, joka kutsuu parse_abc_notation josta saadaan lista dataa
         print("TÄRKEIN ATM", notes_data)
@@ -56,7 +68,7 @@ class MarkovChain:
                 if i < len(song) -int(degree) :
                     print(song[i:i+int(degree)+1], "tää setti triehen")
                     #print("kolmen setti joka laitetaan",notes_data[i:i+int(degree)]) NÄMÄ KOLME KERRALLAAN SEARCHIIN
-                    self.trie.insert(song[i:i+int(degree)]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
+                    self.trie.insert(song[i:i+int(degree)+1]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
                 else:
                     break
 
@@ -71,6 +83,9 @@ class MarkovChain:
         j = 1
         while too_short_for_degree: #tässä siihen asti että biisissä asteen verran nuotteja
             #KOKEILU 1
+            #search kutsu tyhjällä pitäisi palauttaa juuren, 1 nuotti pitäisi palauttaa h nuotin lapset
+            #loppuu liian aikasin jos lapsia
+            #
             notes_data_that_search = song[i:j] #EKALLA NUOTILLA ETITÄÄN
             print("TÄSSÄ NOTES_DATA",notes_data_that_search )
             data_for_generating_next = self.trie.search(notes_data_that_search)
@@ -99,33 +114,58 @@ class MarkovChain:
         #nyt siinä on kaks
 
         #KOKEILU LOPPUU
-        #if len(current.children.values()) >= int(degree): #TÄHÄN SAMA MENETTELY KUIN ALEMPANA
-           # song.append(current.note)
-           # print(current.children.values(), "tämä kohta toimii") #TÄSSÄ LAITTAAA BIISSIIN YHDEN HAARAN LAPSET
-            #length = int(length) - 1
-            #TÄHÄN JATKA ALEMPAAN FOR LOOPPIIN
-        #else:
-            #self.generate_music(length, degree)
-        #tähän se että jos degree on x niin x verran niitä lapsia current_nodesta listaan
-        #for i in range(int(degree)-1): #tässä looppaa listaan degreen verran nuotteja
-            #next_note = random.choice(list(current.children.values()))
-            #song.append(next_note.note)
-            #current = next_note
-            #print("lol", current.note) #TÄHÄN VIELÄ JOS SOLMULLA EI LAPSIA NIIN SEN EKan nuOTIN PITÄÄ OLLA SOLMU JOLLA DEGREEN VERRAN LAPSIA
-        #Tässä oikea markovin ketju voi alkaa
-        #TÄHÄN TULEE SEARCH METODI TRIESTÄ
-        for i in range(int(length) -1): #TÄSSÄ EI OLE OTETTU HUOMIOON tuota ylempää
-            notes_data_that_search = song[-int(degree):-1]
+ 
+        for i in range(int(length) -1): 
+            notes_data_that_search = song[len(song) - int(degree): len(song)] #-3 vikaa tai -4 vikaa #-degree
             data_for_generating_next = self.trie.search(notes_data_that_search)
             if data_for_generating_next == None:
                 break #JA SE PIKKEUS ETTÄ EI OLE LAPSIA LAITA NONE JA BIISIN GENEROIMINEN LOPPUU RAISE ERROR
+            #tai alkaa uutta generoimaan jos tällainen tilanne ja yrittää vaikka 100 kertaa
             else:
                 next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
                 print(next_note)
                 song.append(next_note)
         print("LOPULLINEN TUOTOS", song)
+        #self.testi(length, degree)
 
+    def testi(self, length, degree):
+        length = int(length)
+        songg = []
+        print(list(self.trie.root.children.values()), "tässä")
+        first_note = random.choice(list(self.trie.root.children.values())) #TOIMII
+        current = first_note
+        songg.append(current.note)
+        too_little_notes_for_degree = True
+        for i in range(length-1):
+            while True:
+                data_for_generating_next = self.trie.search(songg)
+                songg.append(current.note)
+                print(data_for_generating_next)
+                length = length - 1
+                if len(songg) == degree:
+                    too_little_notes_for_degree = False
+            notes_data_that_search = song[len(songg) - int(degree): len(songg)] #-3 vikaa tai -4 vikaa #-degree
+            data_for_generating_next = self.trie.search(notes_data_that_search)
+            if data_for_generating_next == None:
+                break #JA SE PIKKEUS ETTÄ EI OLE LAPSIA LAITA NONE JA BIISIN GENEROIMINEN LOPPUU RAISE ERROR
+                #tai alkaa uutta generoimaan jos tällainen tilanne ja yrittää vaikka 100 kertaa
+            else:
+                next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
+                print(next_note)
+                song.append(next_note)
+        print("LOPULLINEN TUOTOS 2", songg)
+        #ylempänä oleva looppi tähän
 
+        
+#s 
+#onko pituus korkeempi kuin aste
+#sh 
+#onko pituus isompi kuin aste
+
+#shko
+
+#if lause kattoo jos hakusana on liian pitkä
+#niin eka pois ja vikat asteen verran mukana
 
 
 
