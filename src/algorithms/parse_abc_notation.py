@@ -3,8 +3,23 @@ import re
 
 class IgnoreSpecialMarks:
 
-    def am_data(self):
-        test_song = "src/data/HavaNagila.abc"
+    def __init__(self):
+        self.final_data = []
+
+    def parse_songs(self,songs_list):
+        for song in songs_list:
+            parsed = self.am_data(song)
+            self.final_data.append(parsed)
+        return self.final_data
+    #kun tätä alempaa kutsuu siitä saa ulos listan numeroilla varustettuna
+    #jos olisi tässä vielä metodi josta tuota alempaa kutsuisi ja parametrilla "src/data/HavaNagila.abc"
+    #sitten siinä uudessa metodissa loopettaisiin sille parametrina annettua listaa ja kutsutaan niillä i tätä vanhaa
+    #se uusi lista olisi ikäyttäjän syöttämät biisit
+    #tuon vanhan metodin jälkeen suoraan voisi mennä vielä tästä add to trie...että se palauttaisi numerot ja suoraan add to trie
+    def am_data(self, song):
+        test_song = song #tähän tulee = song
+        #test_song2
+        #test_song3
         file = os.path.join(test_song)
         with open(file) as file:
             if os.path.exists(test_song):
@@ -60,13 +75,14 @@ class NumericalNotes:
             elif note == ':':  # biisin alku
                     continue
             elif note == ']':  # biisin loppu
-                    lista.append(2000)
+                    continue
             else:
                     #perus nuotti eli iso kirjain tai pieni kirjain
                     note = self.mapping.get(note, 0)
                     lista.append(note) #lisää perus nuotti listaan
+        #TAI TÄHÄN VOI TULLA LISTA ADD TO TRIE
+        return lista #tulee palauttaa final_datan 
 
-        return lista
 
     def previous_note_is_in_third_oktave(self,filtered_song5,note, index, lista):
         lista[index-1] += 20 #muuta edellinen nuotti + 20 (suoraan listassa)

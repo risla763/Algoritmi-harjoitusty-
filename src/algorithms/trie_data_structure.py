@@ -52,11 +52,12 @@ class Trie:
         return tuple
 
     def add_to_trie(self, notes_data, degree):
-        for i in range(len(notes_data)-1):
-            if i < len(notes_data) -1 :
-                self.insert(notes_data[i:i+degree]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
-            else:
-                break
+        for song in notes_data:
+            for i in range(len(song)-1):
+                if i < len(song) -1 :
+                    self.insert(song[i:i+degree]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
+                else:
+                    break
 
 
 #nuotit pitää vielä muuttaa numeroiksi
