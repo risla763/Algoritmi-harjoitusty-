@@ -18,7 +18,7 @@ class Trie:
             node = node.children[note]
             node.weight += 1
             node.note = note
-            print("tämä laitettiin triehen", node.note)
+            #print("tämä triehen", node.note)
 
 
         node.value = True
@@ -32,7 +32,7 @@ class Trie:
             self.print_trie(child_node, depth + 1)
 
     def search(self, notes):
-        print("täsä meni search metodiin", self.root.children.items())
+        #print("tässä meni search metodiin", self.root.children.items())
         node = self.root
         list_of_frequences = []
         list_of_keys = []
@@ -47,7 +47,7 @@ class Trie:
         for i in list_of_children.keys():
             list_of_keys.append(i)
         tuple = (list_of_keys, list_of_frequences)
-        print("TÄTÄ SEARCH PALAUTTAA", tuple) #palauttaa lapset ja niiden painot
+        #print("TÄTÄ SEARCH PALAUTTAA", tuple) #palauttaa lapset ja niiden painot
 
         return tuple
 
@@ -60,16 +60,7 @@ class Trie:
                     break
 
 
-#nuotit pitää vielä muuttaa numeroiksi
-#trie = Trie()
-#trie.insert("1234")
-#trie.search("1")
 
-#Miten eri sävellajeille saadaan eri Triet?
-#Trie tyhjennetään välissä
-#UI: käyttäjä valitsee sävellajin....ja tällöin Trie muodostuu sen
-#sävellajin kappaleista
-#kun käyttäjä valitsee toisen sävellajin Trie puhdistuu ja muodostuu sen sävellajin kappaleista
 
     
 

@@ -11,15 +11,9 @@ class IgnoreSpecialMarks:
             parsed = self.am_data(song)
             self.final_data.append(parsed)
         return self.final_data
-    #kun tätä alempaa kutsuu siitä saa ulos listan numeroilla varustettuna
-    #jos olisi tässä vielä metodi josta tuota alempaa kutsuisi ja parametrilla "src/data/HavaNagila.abc"
-    #sitten siinä uudessa metodissa loopettaisiin sille parametrina annettua listaa ja kutsutaan niillä i tätä vanhaa
-    #se uusi lista olisi ikäyttäjän syöttämät biisit
-    #tuon vanhan metodin jälkeen suoraan voisi mennä vielä tästä add to trie...että se palauttaisi numerot ja suoraan add to trie
+
     def am_data(self, song):
-        test_song = song #tähän tulee = song
-        #test_song2
-        #test_song3
+        test_song = song
         file = os.path.join(test_song)
         with open(file) as file:
             if os.path.exists(test_song):
@@ -35,14 +29,14 @@ class IgnoreSpecialMarks:
                 filtered_song4 = filtered_song4.replace('/','')
                 filtered_song4 = filtered_song4.replace('>','')
                 filtered_song4 = filtered_song4.replace(' ','')
-                print(filtered_song4)
+                #print(filtered_song4)
             else:
                 print(f"File '{test_song}' not found.")
 
         filtered_song5 = []
         for i in filtered_song4:
             filtered_song5.append(i)
-        print(filtered_song5)
+        #print(filtered_song5)
         return NumericalNotes().match_note_to_a_number(0,0,[],filtered_song5)
 
 class NumericalNotes:
@@ -54,8 +48,8 @@ class NumericalNotes:
 
     def match_note_to_a_number(self, note, index, lista,filtered_song5):
         for index, note in enumerate(filtered_song5):
-            print("nuotti", note)
-            print("indexi", index)
+            #print("nuotti", note)
+            #print("indexi", index)
             if note == '^':
                     #kutsuu ylennys metodia
                     self.next_note_is_sharp(filtered_song5,note, index, lista)
@@ -76,6 +70,8 @@ class NumericalNotes:
                     continue
             elif note == ']':  # biisin loppu
                     continue
+            elif note == 'I':  # ignooraa
+                    continue
             else:
                     #perus nuotti eli iso kirjain tai pieni kirjain
                     note = self.mapping.get(note, 0)
@@ -91,7 +87,7 @@ class NumericalNotes:
 
 
     def next_note_is_sharp(self,filtered_song5,note, index, lista):
-        print("tässä indexi," ,index)
+       # print("tässä indexi," ,index)
         note = filtered_song5[index+1] #seuraava nuotti ^merkin jälkeen
         extra_case_value = 100 #seuraava nuotti on nuotti + 100 koska ylennys
         self.match_note_to_a_number_in_list(note,index,extra_case_value,lista, filtered_song5)
@@ -101,7 +97,9 @@ class NumericalNotes:
         extra_case_value = 200 #seuraava nuotti on nuotti + 200 koska alennus
         self.match_note_to_a_number_in_list(note,index,extra_case_value,lista, filtered_song5)
 
-    def next_note_is_returned(self,lista,filtered_song5, note, index):
+    def next_note_is_returned(self, filtered_song5,note, index, lista):
+        #print(index)
+        #print(note)
         note = filtered_song5[index+1] #seuraava nuotti = merkin jälkeen
         extra_case_value = 0 #seuraava nuotti on nuotti + 0 koska palautettu eli mitään ei tapahdu
         self.match_note_to_a_number_in_list(note,index,extra_case_value,lista, filtered_song5)
@@ -112,11 +110,8 @@ class NumericalNotes:
         lista.append(note) #lopullinen lista jossa numerot
         index += 2 #indexi hyppää erikoismerkin ja sitä seuraavan nuotin yli
         note = filtered_song5[index] #seuraava nuotti
-        #self.match_note_to_a_number(note, index, lista, filtered_song4) #kutsuu uusilla notella ja indexillä
 
 
-#MITEN BIISIN LOPPU VAIKUTTAA KAIKKEEN?? monta kertaa 2000 esiintyy...
-# kun lisätään puuhun niin kun biisin loppu se node loppuu ja alkaa taas...
 
 
 
