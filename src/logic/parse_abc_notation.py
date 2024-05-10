@@ -72,6 +72,10 @@ class NumericalNotes:
                     continue
             elif note == 'I':  # ignooraa
                     continue
+            elif note == '<':  # ignooraa
+                    continue
+            elif note == '>':  # ignooraa
+                    continue
             else:
                     #perus nuotti eli iso kirjain tai pieni kirjain
                     note = self.mapping.get(note, 0)

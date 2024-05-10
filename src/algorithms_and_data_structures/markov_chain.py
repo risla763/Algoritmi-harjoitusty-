@@ -1,8 +1,7 @@
 import random
-from algorithms.trie_data_structure import Trie
-from algorithms.parse_abc_notation import IgnoreSpecialMarks
-from algorithms.music_player import Player
-from algorithms.convert_data_to_abc import ConvertToAbc
+from algorithms_and_data_structures.trie_data_structure import Trie
+from logic.parse_abc_notation import IgnoreSpecialMarks
+from logic.convert_data_to_abc import ConvertToAbc
 
 import random
 
@@ -11,7 +10,6 @@ class MarkovChain:
         self.trie = Trie()
         self.numerical_data = IgnoreSpecialMarks()
         self.abc_converter = ConvertToAbc()
-        self.player = Player()
         self.dict_of_songs = {}
 
 
@@ -33,6 +31,13 @@ class MarkovChain:
         print("Bung your eyes 2")
         print("Catherine Ogie 3")
         print("Hava Nagila 4")
+        print("Rasputin 5")
+        print("Ievan Polka 6")
+        print("Taivas on sininen ja valkoinen 7")
+        print("Lost my love 8")
+        print("Krepatka 9")
+        print("The Bear Dance 10")
+        print("Sininen ja valkoinen 11")
         list_of_songs = []
         for i in range(number_of_songs):
             song = input("choose the songs you want the song to consist of:")
@@ -48,7 +53,27 @@ class MarkovChain:
             if song == "2":
                 song = "src/data/Bung_your_eyes.abc"
                 list_of_songs.append(song)
-                
+            if song == "5":
+                song = "src/data/Rasputin.abc"
+                list_of_songs.append(song)
+            if song == "6":
+                song = "src/data/Ievan_polka.abc"
+                list_of_songs.append(song)
+            if song == "7":
+                song = "src/data/Taivas_on_sininen_ja_valkoinen.abc"
+                list_of_songs.append(song)
+            if song == "8":
+                song = "src/data/Lost_my_love.abc"
+                list_of_songs.append(song)
+            if song == "9":
+                song = "src/data/Krepatka.abc"
+                list_of_songs.append(song)
+            if song == "10":
+                song = "src/data/The_bear_dance.abc"
+                list_of_songs.append(song)
+            if song == "11":
+                song = "src/data/Sininen_ja_valkoinen.abc"
+                list_of_songs.append(song)
         notes_data = self.numerical_data.parse_songs(list_of_songs)
         self.choose_degree(notes_data)
 
@@ -122,8 +147,11 @@ class MarkovChain:
                 next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
                 #print(next_note)
                 song.append(next_note)
-        song = self.abc_converter.convert_numbers_to_notes(song)
+        song = self.abc_converter().convert_numbers_to_notes(song)
         print("Generated song", song)
+        self.choose_next_step(song)
+
+    def choose_next_step(self, song):
         running = True
         while running:
             print(running, "mikä arvo")
@@ -145,6 +173,9 @@ class MarkovChain:
                 self.start()
             elif user_input == "6":
                 print(self.dict_of_songs)
+
+
+        return song
             #play old song vielä myös
         #self.testi(length, degree)
 
