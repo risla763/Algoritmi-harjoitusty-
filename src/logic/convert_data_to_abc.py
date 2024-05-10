@@ -3,11 +3,10 @@ import re
 
 class ConvertToAbc:
 
-    def __init__(self, song):
+    def __init__(self):
         self.mapping = {1:'C', 2: 'D', 3: 'E', 4: 'F', 5:'G', 6:'A', 7:'B',
             11:'c', 12:'d',13:'e',14:'f',15:'g',16:'a',17:'b',21: "c'",22: "d'",23:"e'",
             24:"f'",25:"g'",26:"a'",27:"b'"}
-        self.song = song
 
     def convert_numbers_to_notes(self,song):
         abc_song = []

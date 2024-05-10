@@ -42,37 +42,37 @@ class MarkovChain:
         for i in range(number_of_songs):
             song = input("choose the songs you want the song to consist of:")
             if song == "4":
-                song = "src/data/HavaNagila.abc"
+                song = "data/HavaNagila.abc"
                 list_of_songs.append(song)
             if song == "1":
-                song = "src/data/The_Musical_Priest.abc"
+                song = "data/The_Musical_Priest.abc"
                 list_of_songs.append(song)
             if song == "3":
-                song = "src/data/Catherine_Ogie.abc"
+                song = "data/Catherine_Ogie.abc"
                 list_of_songs.append(song)
             if song == "2":
-                song = "src/data/Bung_your_eyes.abc"
+                song = "data/Bung_your_eyes.abc"
                 list_of_songs.append(song)
             if song == "5":
-                song = "src/data/Rasputin.abc"
+                song = "data/Rasputin.abc"
                 list_of_songs.append(song)
             if song == "6":
-                song = "src/data/Ievan_polka.abc"
+                song = "data/Ievan_polka.abc"
                 list_of_songs.append(song)
             if song == "7":
-                song = "src/data/Taivas_on_sininen_ja_valkoinen.abc"
+                song = "data/Taivas_on_sininen_ja_valkoinen.abc"
                 list_of_songs.append(song)
             if song == "8":
-                song = "src/data/Lost_my_love.abc"
+                song = "data/Lost_my_love.abc"
                 list_of_songs.append(song)
             if song == "9":
-                song = "src/data/Krepatka.abc"
+                song = "data/Krepatka.abc"
                 list_of_songs.append(song)
             if song == "10":
-                song = "src/data/The_bear_dance.abc"
+                song = "data/The_bear_dance.abc"
                 list_of_songs.append(song)
             if song == "11":
-                song = "src/data/Sininen_ja_valkoinen.abc"
+                song = "data/Sininen_ja_valkoinen.abc"
                 list_of_songs.append(song)
         notes_data = self.numerical_data.parse_songs(list_of_songs)
         self.choose_degree(notes_data)
@@ -147,7 +147,7 @@ class MarkovChain:
                 next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
                 #print(next_note)
                 song.append(next_note)
-        song = self.abc_converter().convert_numbers_to_notes(song)
+        song = self.abc_converter.convert_numbers_to_notes(song)
         print("Generated song", song)
         self.choose_next_step(song)
 
