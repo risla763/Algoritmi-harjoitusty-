@@ -123,9 +123,10 @@ class MarkovChain:
                 #print(next_note)
                 song.append(next_note)
         song = self.abc_converter.convert_numbers_to_notes(song)
-        print("Generoitu biisi:", song)
+        print("Generated song", song)
         running = True
-        while running == True:
+        while running:
+            print(running, "mikä arvo")
             print("1 = play the song, 2 = save the song, 3 = generate new song with old data/go back to start")
             print("4 = exit, 5 = make song from new data, 6 = see the list of songs")
             user_input = input("Type a number:")
@@ -133,7 +134,7 @@ class MarkovChain:
                 key = input("Name of the song:")
                 self.dict_of_songs[key] = song
             elif user_input == "1":
-                self.player.play_note(song)
+                self.player.play_note(song) #tässä ongelma jos painaa ei heti exit the program
             elif user_input == "3":
                 self.choose_degree(notes_data)
             elif user_input == "4":

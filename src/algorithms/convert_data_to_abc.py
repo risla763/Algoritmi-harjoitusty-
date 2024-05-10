@@ -16,22 +16,22 @@ class ConvertToAbc:
                 note = self.mapping.get(number)
                 if note:
                     note = "^" + note #lisää mappingilla löydetyn numeron ja siihen perään ^
-                abc_song.append(str(note))
+                abc_song.append(note if note is not None else "")  
             elif number > 200: #jos on alennus
                 number -= 200
                 note = self.mapping.get(number)
                 if note:
                     note = "_" + note
-                abc_song.append(str(note))
+                abc_song.append(note if note is not None else "")  
             else:
                 note = self.mapping.get(number)
-                abc_song.append(str(note))
+                abc_song.append(note if note is not None else "")  
             
-        self.abc_notation_form(abc_song)
+        return self.abc_notation_form(abc_song)
 
     def abc_notation_form(self, song):
         abc_dataset = ''.join(song)
-        print(abc_dataset)
+        return abc_dataset
 
 #if __name__ == "__main__":
     #converter = ConvertToAbc()
