@@ -2,6 +2,7 @@ import random
 from algorithms.trie_data_structure import Trie
 from algorithms.parse_abc_notation import IgnoreSpecialMarks
 from algorithms.music_player import Player
+from algorithms.convert_data_to_abc import ConvertToAbc
 
 import random
 
@@ -9,6 +10,7 @@ class MarkovChain:
     def __init__(self):
         self.trie = Trie()
         self.numerical_data = IgnoreSpecialMarks()
+        self.abc_converter = ConvertToAbc()
         self.player = Player()
         self.dict_of_songs = {}
 
@@ -120,6 +122,7 @@ class MarkovChain:
                 next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
                 #print(next_note)
                 song.append(next_note)
+        song = self.abc_converter.convert_numbers_to_notes(song)
         print("Generoitu biisi:", song)
         running = True
         while running == True:

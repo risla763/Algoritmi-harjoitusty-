@@ -18,7 +18,7 @@ class IgnoreSpecialMarks:
         with open(file) as file:
             if os.path.exists(test_song):
                 sisalto = file.read()
-                print(sisalto)
+                #print(sisalto)
                 filtered_song = sisalto.replace('|','')
                 filtered_song2 =  re.sub(r'\d','', filtered_song) #numerot pois
                 filtered_song3 = re.sub(r'(?m)^[wXTOZNMLK]:[^\n]*\n','',filtered_song2)
@@ -87,13 +87,13 @@ class NumericalNotes:
 
 
     def next_note_is_sharp(self,filtered_song5,note, index, lista):
-       # print("tässä indexi," ,index)
-        note = filtered_song5[index+1] #seuraava nuotti ^merkin jälkeen
+       # print("tässä indexi," ,index) VANHA
+        note = filtered_song5[index+1] #seuraava nuotti ^merkin jälkeen #VANHA
         extra_case_value = 100 #seuraava nuotti on nuotti + 100 koska ylennys
         self.match_note_to_a_number_in_list(note,index,extra_case_value,lista, filtered_song5)
 
     def next_note_is_flat(self,filtered_song5,note, index, lista):
-        note = filtered_song5[index+1] #seuraava nuotti _merkin jälkeen
+        note = filtered_song5[index+1] #nuotti ennen _ merkkiä
         extra_case_value = 200 #seuraava nuotti on nuotti + 200 koska alennus
         self.match_note_to_a_number_in_list(note,index,extra_case_value,lista, filtered_song5)
 
@@ -108,7 +108,7 @@ class NumericalNotes:
         note = self.mapping.get(note, 0) #hakee seuraavan nuotin arvon
         note + extra_case_value
         lista.append(note) #lopullinen lista jossa numerot
-        index += 2 #indexi hyppää erikoismerkin ja sitä seuraavan nuotin yli
+        index += 1 #indexi hyppää erikoismerkin yli ja sitä seuraavan nuotin yli seuraavaan nuottiin 
         note = filtered_song5[index] #seuraava nuotti
 
 
