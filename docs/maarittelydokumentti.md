@@ -8,8 +8,8 @@ Käytännössä tämä on graafisella käyttöliittymällä toteutettu sovellus,
 
 Tärkeää:
 
--Data abc-notaatio uodossa
--Sävellajin täytyy olla sama datassa
+-Data abc-notaatio muodossa
+-Sävellajin täytyy olla samassa datassa
 -Rytmi on satunnainen
 -Sävellyksien pituus on aina vakio
 
