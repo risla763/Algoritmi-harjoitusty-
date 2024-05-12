@@ -1,4 +1,7 @@
 class Node:
+    """
+    Luokka, joka alustaa triehen tulevan solmun
+    """
     def __init__(self):
         self.children = {}
         self.note = None #nuotti
@@ -7,6 +10,12 @@ class Node:
 
 
 class Trie:
+    """
+    Datarakenne, johon talletetaan abc notaatio 
+    numeroiden muodossa.
+
+    Puuhun talletetaan asteen pituisia haaroja.    
+    """
     def __init__(self):
         self.root = Node()
 

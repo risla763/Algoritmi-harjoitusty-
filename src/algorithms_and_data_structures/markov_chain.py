@@ -6,6 +6,9 @@ from logic.convert_data_to_abc import ConvertToAbc
 import random
 
 class MarkovChain:
+    """
+    Tässä algoritmi, jolla generoidaan musiikkia.
+    """
     def __init__(self):
         self.trie = Trie()
         self.numerical_data = IgnoreSpecialMarks()

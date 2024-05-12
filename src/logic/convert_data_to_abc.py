@@ -2,6 +2,11 @@ import os
 import re
 
 class ConvertToAbc:
+    """
+        Luokka, joka muuttaa numeroita 
+        sisältävän listan merkkijonoksi.
+        Merkkijono on generoitu kappale abc notaationa.
+    """
 
     def __init__(self):
         self.mapping = {1:'C', 2: 'D', 3: 'E', 4: 'F', 5:'G', 6:'A', 7:'B',

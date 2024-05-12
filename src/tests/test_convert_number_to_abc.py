@@ -6,6 +6,10 @@ from logic.parse_abc_notation import IgnoreSpecialMarks
 from logic.convert_data_to_abc import ConvertToAbc
 
 class TestParseAbc(unittest.TestCase):
+    """
+    Testaa vastaavatko numerot oikeita abc notaatio merkintöjä.
+    
+    """
 
     def setUp(self):
         self.converter = ConvertToAbc()

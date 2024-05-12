@@ -4,6 +4,11 @@ from algorithms_and_data_structures.markov_chain import MarkovChain
 from logic.convert_data_to_abc import ConvertToAbc
 from logic.parse_abc_notation import NumericalNotes
 class TestMarkovChain(unittest.TestCase):
+    """
+        Tämä luokka testaa että esiintyykö generoidussa
+        kappaleessa olevat sävelkulut/säveljonot myös
+        datassa, josta se on generoitu.
+    """
 
     def setUp(self):
         self.markov_chain = MarkovChain()

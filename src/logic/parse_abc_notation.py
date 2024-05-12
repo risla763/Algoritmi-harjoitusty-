@@ -2,6 +2,9 @@ import os
 import re
 
 class IgnoreSpecialMarks:
+    """
+        Luokka, joka karsii abc notaatiosta erikoismerkit.
+    """
 
     def __init__(self):
         self.final_data = []
@@ -40,7 +43,11 @@ class IgnoreSpecialMarks:
         return NumericalNotes().match_note_to_a_number(0,0,[],filtered_song5,0)
 
 class NumericalNotes:
-
+    """
+        Luokka, joka muuttaa abc notaation 
+        sävelet niitä vastaaviksi numeroiksi
+        ja laittaa ne listaan. Esim. jos ylennys + 100 jos alennus + 200 yms.
+    """
     def __init__(self):
         self.mapping = {'C': 1, 'D': 2, 'E': 3, 'F': 4, 'G': 5, 'A': 6, 'B': 7,
             'c': 11, 'd': 12, 'e': 13, 'f': 14, 'g': 15, 'a': 16, 'b': 17,

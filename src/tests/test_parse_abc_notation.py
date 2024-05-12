@@ -6,6 +6,10 @@ from logic.parse_abc_notation import IgnoreSpecialMarks
 from logic.convert_data_to_abc import ConvertToAbc
 
 class TestParseAbc(unittest.TestCase):
+    """
+        Testaa sitä että abc nuotit 
+        muuttuvat niitä vastaaviksi oikeiksi nuoteiksi.
+    """
 
     def setUp(self):
         self.parse = IgnoreSpecialMarks()
@@ -14,5 +18,5 @@ class TestParseAbc(unittest.TestCase):
     def test_parser(self):
         test_all_notes = self.parse.am_data("data/test.abc")
         print(test_all_notes, "MOIIII")
-        self.assertEqual(test_all_notes,self.all_oktaves)
+        self.assertEqual(test_all_notes,self.all_)
         #print(test_all_notes, "MOIIII")
