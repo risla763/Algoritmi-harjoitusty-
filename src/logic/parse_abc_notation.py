@@ -49,15 +49,19 @@ class NumericalNotes:
         self.previous = 0
         self.third_octave = False
         self.flat = False
+        self.skip = False
 
     def match_note_to_a_number(self, note, note_index, lista,filtered_song5, previous):
         sharp = False
         flat = False
         for note_index, note in enumerate(filtered_song5):
+            self.skip = False
             print("nuotti", note)
             #print("indexi", note_index)
             #print("tää index homma", filtered_song5[note_index-1]) #oikein
-            if filtered_song5[note_index-1] == '^':
+            if filtered_song5[note_index-2] == '_' or filtered_song5[note_index-2] == '^':
+                self.skip = True
+            elif filtered_song5[note_index-1] == '^':
                 continue #jos edellinen oli ylennys
             #if filtered_song5[note_index-1] == '_':
                # continue
@@ -101,12 +105,12 @@ class NumericalNotes:
                     continue
             else:
                 note = self.mapping.get(note)
-                if note+100 == self.previous and sharp == True:
-                    note = note + 100
+                #if note+100 == self.previous and sharp == True and note != None:
+                   # note = note + 100
+                   # self.lista.append(note) 
+                if note is not None and self.skip != True:
                     self.lista.append(note) 
-                elif note is not None:
-                    self.lista.append(note) 
-                    print("Jiii")#lisää perus nuotti listaan
+                   # print("Jiii")#lisää perus nuotti listaan
                 #elif note+200 == self.previous and flat == True:
                    # note = note + 200
                    # self.lista.append(note) 
@@ -130,17 +134,10 @@ class NumericalNotes:
         self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
 
     def next_note_is_flat(self,filtered_song5,note, note_index, lista, previous):
-        new_note = self.lista[-1]
-        print("hhh", new_note)
-        self.lista.pop()
-        new_note = new_note + 200
-        self.lista.append(new_note)
-        print(self.lista)
-        note_index += 1 #seuraava indexi
-        self.flat = False
-        #note = filtered_song5[note_index+1] #nuotti ennen _ merkkiä
-        #extra_case_value = 200 #seuraava nuotti on nuotti + 200 koska alennus
-        #self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
+        print("Meni tännee", filtered_song5[note_index+1])
+        note = filtered_song5[note_index+1] #seuraava nuotti ^merkin jälkeen #VANHA
+        extra_case_value = 200 #seuraava nuotti on nuotti + 100 koska ylennys
+        self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
 
     def next_note_is_returned(self, filtered_song5,note, note_index, lista, previous):
         #print(note_index)
@@ -151,8 +148,10 @@ class NumericalNotes:
 
     def match_note_to_a_number_in_list(self,note,note_index,extra_case_value,lista, filtered_song5, previous):
         note = self.mapping.get(note) #hakee seuraavan nuotin arvon
+        print("no mikäs",note)
         if note is not None:
             note += extra_case_value
+            print("no mikäs",note)
             self.lista.append(note) 
             self.previous = note
         note_index += 2 #indexi hyppää erikoismerkin yli ja sitä seuraavan nuotin yli seuraavaan nuottiin 

@@ -10,13 +10,14 @@ class TestMarkovChain(unittest.TestCase):
         self.trie = Trie()
         self.convert = ConvertToAbc()
         self.numeric_data = NumericalNotes()
-        self.data = [[3, 3, 105, 4, 3, 105, 105, 7, 6, 105, 6, 6, 
-        11, 7, 6, 105, 4, 3, 4, 105, 105, 4, 3, 4, 3, 105, 105, 4,
-         3, 3, 3, 4, 4, 3, 2, 2, 2, 2, 4, 3, 2, 2, 6, 105, 4, 3, 4, 
-         105, 105, 4, 3, 4, 3, 6, 11, 6, 11, 6, 11, 6, 6, 6, 11, 7, 6,
-          11, 7, 6, 6, 6, 6, 11, 7, 6, 11, 7, 6, 7, 7, 7, 12, 11, 7, 12,
-           11, 7, 7, 7, 7, 12, 11, 7, 12, 11, 7, 7, 7, 7, 13, 7, 7, 7, 13, 
-           3, 3, 3, 11, 7, 6, 105, 6]]
+        self.data = [[3, 3, 5, 3, 5, 105, 7, 6,
+         5, 6, 6, 11, 7, 6, 105, 3, 4, 5, 5, 3,
+          4, 3, 5, 5, 4, 3, 3, 3, 4, 4, 3, 2, 2, 2, 2,
+           4, 3, 2, 2, 6, 5, 3, 4, 5, 5, 3, 4, 3, 6, 11,
+            6, 11, 6, 11, 6, 6, 6, 11, 7, 6, 11, 7, 6, 6, 6, 6,
+             11, 7, 6, 11, 7, 6, 7, 7, 7, 12, 11, 7, 12, 11, 7, 7, 7, 
+             7, 12, 11, 7, 12, 11, 7, 7, 7, 7, 13, 7, 7, 7, 13, 3, 3, 3,
+              11, 7, 6, 5, 6]]
 
         self.degree = 3
         
@@ -53,10 +54,10 @@ class TestMarkovChain(unittest.TestCase):
         appeared_in_1 = False
         help_list_3 = []
         for i in help_list_1:
-            print("ATM TÄRKEIN", i)
+            #print("ATM TÄRKEIN", i)
             if i not in help_list_3:
                 help_list_3.append(i)
-        print(result, "haloo")
+        #print(result, "haloo")
         for notes_list in help_list_3:
             if notes_list in result[0]:
                 if notes_list not in help_list_2:
