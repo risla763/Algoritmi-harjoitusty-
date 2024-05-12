@@ -10,21 +10,14 @@ class TestMarkovChain(unittest.TestCase):
         self.trie = Trie()
         self.convert = ConvertToAbc()
         self.numeric_data = NumericalNotes()
-        self.data = [[13, 13, 6, 5, 3, 6, 6, 5, 6, 5,
-         6, 11, 7, 6, 5, 13, 12, 7, 6, 5, 3, 6, 6, 5,
-          6, 5, 6, 11, 7, 6, 5, 3, 6, 6, 7, 11, 11, 7,
-           11, 13, 12, 11, 7, 5, 12, 5, 13, 5, 12, 11,
-            7, 6, 7, 11, 12, 13, 16, 15, 13, 12, 7, 6,
-             6, 7, 11, 6, 6, 16, 15, 13, 16, 15, 13, 12,
-              7, 5, 6, 7, 12, 11, 6, 6, 16, 15, 13, 16,
-               15, 13, 12, 7, 6, 6], [3, 5, 105, 5, 6, 7,
-                11, 12, 13, 15, 115, 15, 16, 3, 6, 7, 6, 11,
-                 12, 13, 12, 11, 7, 6, 5, 6, 5, 7, 11, 12, 15, 
-                 13, 12, 7, 5, 6, 7, 6, 11, 12, 13, 12, 11, 7, 11
-                 , 12, 13, 6, 7, 6, 105, 5, 6, 6, 5, 11, 12, 13, 15,
-                  16, 15, 13, 11, 15, 13, 11, 5, 6, 5, 7, 11, 12, 15,
-                   13, 12, 7, 5, 11, 12, 13, 15, 16, 15, 13, 11, 12, 13, 
-                   115, 15, 16, 6, 7, 6, 105, 5, 6, 6]]
+        self.data = [[3, 3, 105, 4, 3, 105, 105, 7, 6, 105, 6, 6, 
+        11, 7, 6, 105, 4, 3, 4, 105, 105, 4, 3, 4, 3, 105, 105, 4,
+         3, 3, 3, 4, 4, 3, 2, 2, 2, 2, 4, 3, 2, 2, 6, 105, 4, 3, 4, 
+         105, 105, 4, 3, 4, 3, 6, 11, 6, 11, 6, 11, 6, 6, 6, 11, 7, 6,
+          11, 7, 6, 6, 6, 6, 11, 7, 6, 11, 7, 6, 7, 7, 7, 12, 11, 7, 12,
+           11, 7, 7, 7, 7, 12, 11, 7, 12, 11, 7, 7, 7, 7, 13, 7, 7, 7, 13, 
+           3, 3, 3, 11, 7, 6, 105, 6]]
+
         self.degree = 3
         
     def test_sequence_existence(self):
@@ -32,11 +25,12 @@ class TestMarkovChain(unittest.TestCase):
         length = 10
         generated_song = self.markov_chain.generate_music(length, self.degree, self.data)
         #lista = self.convert.numeric_song_list(generated_song)
-        print(generated_song, "lol") #tässä kirjaimet
+        #print(generated_song, "lol") #tässä kirjaimet
         lista = []
         note = "a"
         note_index = 0
-        generated_song = self.numeric_data.match_note_to_a_number(note, note_index, lista, generated_song)
+        previous = 0
+        generated_song = self.numeric_data.match_note_to_a_number(note, note_index, lista, generated_song, previous)
         print(generated_song, "lollololol") 
         #data = self.convert.convert_numbers_to_notes(self.data[0])
         #print(self.data, "lol")
@@ -47,7 +41,7 @@ class TestMarkovChain(unittest.TestCase):
         passed = True
         sublists = []
         result = [self.generate_sublists(sublist) for sublist in data]
-        print(result, "mOIIII") #tämän sisällä kaksi listaa
+        #print(result, "mOIIII") #tämän sisällä kaksi listaa
         help_list_1 = []
         help_list_2 = []
         for i in range(2, len(generated_song) - (degree)):
@@ -59,16 +53,17 @@ class TestMarkovChain(unittest.TestCase):
         appeared_in_1 = False
         help_list_3 = []
         for i in help_list_1:
+            print("ATM TÄRKEIN", i)
             if i not in help_list_3:
                 help_list_3.append(i)
-
+        print(result, "haloo")
         for notes_list in help_list_3:
             if notes_list in result[0]:
                 if notes_list not in help_list_2:
                     help_list_2.append(notes_list)
-            if notes_list in result[1] and notes_list not in result[0]:
-                if notes_list not in help_list_2:
-                    help_list_2.append(notes_list)
+            #if notes_list in result[1] and notes_list not in result[0]:
+              #  if notes_list not in help_list_2:
+                   # help_list_2.append(notes_list)
         print(help_list_3, "1")
         print(help_list_2, "2")
         self.assertEqual(help_list_3,help_list_2)

@@ -101,7 +101,7 @@ class NumericalNotes:
                 if note+100 == self.previous and sharp == True:
                     note = note + 100
                     self.lista.append(note) 
-                elif note is not None and note+100 != previous or note+200 != previous:
+                elif note is not None:
                     self.lista.append(note) #lisää perus nuotti listaan
                 elif note+200 == self.previous and flat == True:
                     note = note + 200
@@ -144,9 +144,3 @@ class NumericalNotes:
         if note_index < len(filtered_song5):
             note = filtered_song5[note_index]
         return note, note_index 
-
-
-
-
-
-

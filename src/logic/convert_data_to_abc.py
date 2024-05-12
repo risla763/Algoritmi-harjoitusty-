@@ -30,7 +30,6 @@ class ConvertToAbc:
                 abc_song.append(note if note is not None else "")  
                 help = False
             elif help == True:
-                print("NYT MENEE TÄNNE")
                 note = self.mapping.get(number)
                 abc_song.append(note if note is not None else "")  
                 continue
