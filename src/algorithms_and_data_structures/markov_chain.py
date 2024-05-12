@@ -16,7 +16,7 @@ class MarkovChain:
 
     def start(self):
         print("If you want to generate music press 1")
-        print("If you want to listen songs you have generated press 2")
+        print("If you want to exit press 2")
         user_input = int(input("Your input: ")) 
         while True:
             number_of_songs = input("How many songs do you want the data to consist of: ")
@@ -140,16 +140,19 @@ class MarkovChain:
  
         for i in range(int(length) -1): 
             notes_data_that_search = song[len(song) - int(degree): len(song)] #-3 vikaa tai -4 vikaa #-degree
+            print("TÄRkeiN", notes_data_that_search)
             data_for_generating_next = self.trie.search(notes_data_that_search)
             if data_for_generating_next == None:
                 break
             else:
                 next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
-                #print(next_note)
+                print(next_note, data_for_generating_next[0],data_for_generating_next[1])
                 song.append(next_note)
+        self.abc_converter.numeric_song_list(song)
         song = self.abc_converter.convert_numbers_to_notes(song)
         print("Generated song", song)
         self.choose_next_step(song)
+        return song
 
     def choose_next_step(self, song):
         running = True

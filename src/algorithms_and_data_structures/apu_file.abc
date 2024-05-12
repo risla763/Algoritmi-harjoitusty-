@@ -1,0 +1,20 @@
+        self.mapping = {'C': 1, 'D': 2, 'E': 3, 'F': 4, 'G': 5, 'A': 6, 'B': 7,
+            'c': 11, 'd': 12, 'e': 13, 'f': 14, 'g': 15, 'a': 16, 'b': 17, "c'": 21, "d'": 22, "e'": 23,
+            "f'": 24,"g'": 25,"a'": 26,"b'": 27, 'C^': 101, 'D^': 102, 'E^':103,
+             'F^': 104, 'G^': 105, 'A^': 106, 'B^': 107, 'c^':
+              111, 'd^': 112, 'e^': 113, 'f^': 114, 'g^': 115, 'a^': 116, 'b^': 117,
+              "c'^": 121, "d'^": 122, "e'^": 123, "f'^": 124, "g'^": 125, "a'^": 126, "b'^": 127, #kun tää rivi tehty ylennykset done
+              'C_': 201, 'D_': 202, 'E_': 203, 'F_': 204, 'G_': 205, 'A_': 206, 'B_': 207,
+              'c_': 211, 'd_': 212, 'e_': 213, 'f_': 214, 'g_': 215, 'a_': 216, 'b_': 217, 
+              "c'_": 221, "d'_": 222, "e'_": 223, "f'_": 224, "g'_": 225, "a'_": 226, "b'_": 227, 
+           }
+
+yksikkötestit
+-tarkista että generoitu kappale sekvenssit läpi ja katso että ne löytyy alkuperäisestä opetusdatasta. 
+(siis käy läpi numeeriseen muotoon muutettua dataa ja sitten kappaleessa olevaa dataa)
+eli aste k ja kappaleesta pitää löytyä k +1 monikko joka biisissä myös on
+
+-valmiina generoituja biisejä dokumentaatioon
+-eri asteilla
+
+-kirjota dokumentaatioon oletukset (ei alimpia oktaaveja)
