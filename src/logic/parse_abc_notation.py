@@ -47,31 +47,34 @@ class NumericalNotes:
         }
         self.lista = []
         self.previous = 0
+        self.third_octave = False
+        self.flat = False
 
     def match_note_to_a_number(self, note, note_index, lista,filtered_song5, previous):
         sharp = False
         flat = False
         for note_index, note in enumerate(filtered_song5):
-            #print("nuotti", note)
+            print("nuotti", note)
             #print("indexi", note_index)
             #print("tää index homma", filtered_song5[note_index-1]) #oikein
             if filtered_song5[note_index-1] == '^':
                 continue #jos edellinen oli ylennys
-            if filtered_song5[note_index-1] == '_':
-                continue
+            #if filtered_song5[note_index-1] == '_':
+               # continue
             if note == '^':
                     #kutsuu ylennys metodia
                     sharp = True
                     self.next_note_is_sharp(filtered_song5,note, note_index, lista, previous)
             elif note == '_':
                     #kutsuu alennus metodia
-                    flat = True
+                    self.flat = True
                     self.next_note_is_flat(filtered_song5,note, note_index, lista, previous)
             #elif note == '=':
                     #kutsuu palautus metodia
                     #self.next_note_is_returned(filtered_song5,note, note_index, lista)
             elif note == "'":
                     #jos nuotti on kolmannessa oktaavissa
+                    self.third_octave = True
                     self.previous_note_is_in_third_oktave(filtered_song5,note, note_index, lista, previous)
             elif note == '(' or note == ')': #ignooraa nämä
                     continue
@@ -102,18 +105,22 @@ class NumericalNotes:
                     note = note + 100
                     self.lista.append(note) 
                 elif note is not None:
-                    self.lista.append(note) #lisää perus nuotti listaan
-                elif note+200 == self.previous and flat == True:
-                    note = note + 200
                     self.lista.append(note) 
+                    print("Jiii")#lisää perus nuotti listaan
+                #elif note+200 == self.previous and flat == True:
+                   # note = note + 200
+                   # self.lista.append(note) 
 
         return self.lista
 
 
     def previous_note_is_in_third_oktave(self,filtered_song5,note, note_index, lista, previous):
-        lista[note_index-1] += 20 #muuta edellinen nuotti + 20 (suoraan listassa)
-        note_index += 1 #seuraava indexi
-        self.match_note_to_a_number(note,note_index,lista, previous)
+        new_note = self.lista[-1]
+        self.lista.pop()
+        new_note = new_note + 10
+        self.lista.append(new_note)
+        note_index += 1
+        self.third_octave = False
 
 
     def next_note_is_sharp(self,filtered_song5,note, note_index, lista, previous):
@@ -123,9 +130,17 @@ class NumericalNotes:
         self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
 
     def next_note_is_flat(self,filtered_song5,note, note_index, lista, previous):
-        note = filtered_song5[note_index+1] #nuotti ennen _ merkkiä
-        extra_case_value = 200 #seuraava nuotti on nuotti + 200 koska alennus
-        self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
+        new_note = self.lista[-1]
+        print("hhh", new_note)
+        self.lista.pop()
+        new_note = new_note + 200
+        self.lista.append(new_note)
+        print(self.lista)
+        note_index += 1 #seuraava indexi
+        self.flat = False
+        #note = filtered_song5[note_index+1] #nuotti ennen _ merkkiä
+        #extra_case_value = 200 #seuraava nuotti on nuotti + 200 koska alennus
+        #self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
 
     def next_note_is_returned(self, filtered_song5,note, note_index, lista, previous):
         #print(note_index)
