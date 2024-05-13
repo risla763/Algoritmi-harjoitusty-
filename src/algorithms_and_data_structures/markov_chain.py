@@ -179,6 +179,3 @@ class MarkovChain:
 
 
         return song
-
-
-
