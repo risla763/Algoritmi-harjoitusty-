@@ -14,15 +14,14 @@ class MarkovChain:
         self.numerical_data = IgnoreSpecialMarks()
         self.abc_converter = ConvertToAbc()
         self.dict_of_songs = {}
+        self.running = True
 
 
 
     def start(self):
-        print("If you want to generate music press 1")
-        print("If you want to exit press 2")
-        user_input = int(input("Your input: ")) 
+        print("Generate music from data by folowing the steps below")
         while True:
-            number_of_songs = input("How many songs do you want the data to consist of: ")
+            number_of_songs = input("How many songs do you want the data to consist of (max 11 and min 1): ")
             if number_of_songs.isdigit() and int(number_of_songs) > 0:
                 number_of_songs = int(number_of_songs)
                 break
@@ -82,168 +81,104 @@ class MarkovChain:
 
 
     def choose_degree(self, notes_data):
-        degree = input("Choose degree:")
-        #print("Tässä data josta generoidaan biisi:",notes_data)
-        #print("TÄSSÄ ASTE", degree)
-        self.add_data_to_trie(notes_data,degree)
-        self.choose_lenght(degree, notes_data)
+        choose_degree = True
+        while choose_degree:
+            degree = input("Choose degree (1-10):")
+            if degree.isdigit():
+                degree = int(degree)
+                if 1 <= degree <= 10:
+                    choose_degree = False
+                    self.add_data_to_trie(notes_data,degree)
+                    self.choose_lenght(degree, notes_data)
+                else:
+                    print("Please enter a valid degree.")
 
     def choose_lenght(self, degree, notes_data):
-        lenght = input("Choose lenght:")
-        #käyttäjä valitsee pituuden
-        self.generate_music(lenght,degree, notes_data)
+        choose_length = Trie
+        while choose_length:
+            length = input("Choose length (2-70): ")
+            if length.isdigit():
+                length = int(length)
+                if 2 <= length <= 70:
+                    choose_length = False
+                    self.generate_music(length,degree, notes_data)
+                else:
+                    print("Please enter a number between 1 and 40.")
+            else:
+                print("Please enter a valid number.")
 
-    def add_data_to_trie(self, notes_data, degree): #!!!tähän vielä pitää tulla se miten dataa lisätään kun 2000 eli biisin loppu??
-        print("data", notes_data)
+    def add_data_to_trie(self, notes_data, degree):
         for song in notes_data:
             for i in range(len(song)-1):
                 if i < len(song) -int(degree) :
-                    #print(song[i:i+int(degree)+1], "tää setti triehen")
-                    self.trie.insert(song[i:i+int(degree)+1]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
+                    self.trie.insert(song[i:i+int(degree)+1])
                 else:
                     break
 
     def generate_music(self, length, degree, notes_data):
         song = []
-        #print(list(self.trie.root.children.values()))
-        first_note = random.choice(list(self.trie.root.children.values())) #TOIMII
+        first_note = random.choice(list(self.trie.root.children.values()))
         too_short_for_degree = True
         current = first_note
         song.append(current.note)
         i = 0
         j = 1
-        while too_short_for_degree: #tässä siihen asti että biisissä asteen verran nuotteja
-            #KOKEILU 1
+        while too_short_for_degree:
             notes_data_that_search = song[i:j]
-            #print("TÄSSÄ NOTES_DATA",notes_data_that_search )
             data_for_generating_next = self.trie.search(notes_data_that_search)
             j += 1
             length = int(length) -1
             if data_for_generating_next is None or data_for_generating_next is ([], []):
-                next_note = random.choice(list(self.trie.root.children.values())) #ekalla solmulla ei lapsia
+                next_note = random.choice(list(self.trie.root.children.values()))
                 song.append(next_note.note)
-                #print(next_note, "randomilla")
             else:
                 if data_for_generating_next[1]: 
-                    next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
-                    #print(next_note, "painojen kanssa")
+                    next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0]
                     song.append(next_note)
                 elif data_for_generating_next[0]:
-                    next_note = random.choice(data_for_generating_next[0]) #TÄSSÄ VALITSEE SEURAAVAN ILMAN PAINOJA
-                    #print(next_note)
+                    next_note = random.choice(data_for_generating_next[0])
                     song.append(next_note)
-                    #print(next_note, "ilman painoja")
                 else:
-                    next_note = random.choice(list(self.trie.root.children.values())) # Fallback to root children if no valid next notes found
+                    next_note = random.choice(list(self.trie.root.children.values()))
                     song.append(next_note.note)
             if len(song) >= int(degree):
                 too_short_for_degree = False
-                #print("nyt tarpeeksi dataa biisissä", length)
-        #KOKEILU LOPPUU
  
         for i in range(int(length) -1): 
-            notes_data_that_search = song[len(song) - int(degree): len(song)] #-3 vikaa tai -4 vikaa #-degree
-            print("TÄRkeiN", notes_data_that_search)
+            notes_data_that_search = song[len(song) - int(degree): len(song)]
             data_for_generating_next = self.trie.search(notes_data_that_search)
             if data_for_generating_next == None:
                 break
             else:
-                next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
-                print(next_note, data_for_generating_next[0],data_for_generating_next[1])
+                next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0]
                 song.append(next_note)
         self.abc_converter.numeric_song_list(song)
         song = self.abc_converter.convert_numbers_to_notes(song)
-        print("Generated song", song)
-        self.choose_next_step(song)
+        print("Here is your generated song in abc notation:", song)
+        self.choose_next_step(song, notes_data)
         return song
 
-    def choose_next_step(self, song):
-        running = True
-        while running:
-            print(running, "mikä arvo")
-            print("1 = play the song, 2 = save the song, 3 = generate new song with old data/go back to start")
-            print("4 = exit, 5 = make song from new data, 6 = see the list of songs")
+    def choose_next_step(self, song, notes_data):
+        while self.running:
+            print("1 = save the song, 2 = generate new song with old data")
+            print("3 = see the list of songs, 4 = make a new song from new data, 5 = exit")
             user_input = input("Type a number:")
-            if user_input == "2":
+            if user_input == "1":
                 key = input("Name of the song:")
                 self.dict_of_songs[key] = song
-            elif user_input == "1":
-                self.player.play_note(song) #tässä ongelma jos painaa ei heti exit the program
-            elif user_input == "3":
+            elif user_input == "2":
                 self.choose_degree(notes_data)
-            elif user_input == "4":
-                running = False
-                print("Exiting the program")
-                break
             elif user_input == "5":
+                self.running = False
+                print("Exiting the program")
+                continue
+            elif user_input == "4":
                 self.start()
-            elif user_input == "6":
+            elif user_input == "3":
                 print(self.dict_of_songs)
 
 
         return song
-            #play old song vielä myös
-        #self.testi(length, degree)
-
-
-
-
-
-
-
-
-
-
-
-#TÄSSÄ ALLA TOINEN VERSIO
-    def testi(self, length, degree):
-        length = int(length)
-        songg = []
-        print(list(self.trie.root.children.values()), "tässä")
-        first_note = random.choice(list(self.trie.root.children.values())) #TOIMII
-        current = first_note
-        songg.append(current.note)
-        too_little_notes_for_degree = True
-        for i in range(length-1):
-            while True:
-                data_for_generating_next = self.trie.search(songg)
-                songg.append(current.note)
-                print(data_for_generating_next)
-                length = length - 1
-                if len(songg) == degree:
-                    too_little_notes_for_degree = False
-            notes_data_that_search = song[len(songg) - int(degree): len(songg)] #-3 vikaa tai -4 vikaa #-degree
-            data_for_generating_next = self.trie.search(notes_data_that_search)
-            if data_for_generating_next == None:
-                break #JA SE PIKKEUS ETTÄ EI OLE LAPSIA LAITA NONE JA BIISIN GENEROIMINEN LOPPUU RAISE ERROR
-                #tai alkaa uutta generoimaan jos tällainen tilanne ja yrittää vaikka 100 kertaa
-            else:
-                next_note = random.choices(data_for_generating_next[0],data_for_generating_next[1])[0] #TÄSSÄ VALITSEE SEURAAVAN
-                print(next_note)
-                song.append(next_note)
-        print("LOPULLINEN TUOTOS 2", songg)
-        running = True
-        while running:
-            print("1 = play the song, 2 = save the song, 3 = generate new song with old data/go back to start")
-            print("4 = exit, 5 = make song from new data, 6 = see the list of songs")
-            user_input = input("Your input:")
-            if user_input == "2":
-                key = input("Give your song a name:")
-                self.dict_of_songs[key] = songg #TÄSSÄ LISTASSA BIISIT
-            elif user_input == "1":
-                self.player.play_note(songg)
-            elif user_input == "3":
-                MarkovChain().choose_degree()
-            elif user_input == "4":
-                runninhg = False
-                break
-            elif user_input == "5":
-                MarkovChain().start()
-
-
-        #ylempänä oleva looppi tähän
-
-
 
 
 

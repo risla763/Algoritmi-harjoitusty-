@@ -17,6 +17,4 @@ class TestParseAbc(unittest.TestCase):
         11, 12, 13, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 27] 
     def test_parser(self):
         test_all_notes = self.parse.am_data("data/test.abc")
-        print(test_all_notes, "MOIIII")
-        self.assertEqual(test_all_notes,self.all_)
-        #print(test_all_notes, "MOIIII")
+        self.assertEqual(test_all_notes,self.all_oktaves)

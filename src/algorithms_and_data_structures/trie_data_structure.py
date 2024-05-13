@@ -4,7 +4,7 @@ class Node:
     """
     def __init__(self):
         self.children = {}
-        self.note = None #nuotti
+        self.note = None
         self.weight = 0
         self.value = False
 
@@ -27,8 +27,6 @@ class Trie:
             node = node.children[note]
             node.weight += 1
             node.note = note
-            #print("tämä triehen", node.note)
-
 
         node.value = True
         
@@ -41,7 +39,6 @@ class Trie:
             self.print_trie(child_node, depth + 1)
 
     def search(self, notes):
-        #print("tässä meni search metodiin", self.root.children.items())
         node = self.root
         list_of_frequences = []
         list_of_keys = []
@@ -56,15 +53,13 @@ class Trie:
         for i in list_of_children.keys():
             list_of_keys.append(i)
         tuple = (list_of_keys, list_of_frequences)
-        #print("TÄTÄ SEARCH PALAUTTAA", tuple) #palauttaa lapset ja niiden painot
-
         return tuple
 
     def add_to_trie(self, notes_data, degree):
         for song in notes_data:
             for i in range(len(song)-1):
                 if i < len(song) -1 :
-                    self.insert(song[i:i+degree]) #tässä Triehen lisättäisiin datasta asteen pituisia pätkiä
+                    self.insert(song[i:i+degree])
                 else:
                     break
 

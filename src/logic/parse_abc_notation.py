@@ -21,9 +21,7 @@ class IgnoreSpecialMarks:
         with open(file) as file:
             if os.path.exists(test_song):
                 sisalto = file.read()
-                #print(sisalto)
-                #filtered_song = sisalto.replace('|','')
-                filtered_song2 =  re.sub(r'\d','', sisalto) #numerot pois
+                filtered_song2 =  re.sub(r'\d','', sisalto)
                 filtered_song3 = re.sub(r'(?m)^[wXTOZNMLK]:[^\n]*\n','',filtered_song2)
                 filtered_song4 = re.sub(r'"(?:E|Dm)"\s*:','',filtered_song3)
                 filtered_song4 =  re.sub(r'"[CDEFAB]"','', filtered_song4) 
@@ -32,14 +30,12 @@ class IgnoreSpecialMarks:
                 filtered_song4 = filtered_song4.replace('/','')
                 filtered_song4 = filtered_song4.replace('>','')
                 filtered_song4 = filtered_song4.replace(' ','')
-                #print(filtered_song4)
             else:
                 print(f"File '{test_song}' not found.")
 
         filtered_song5 = []
         for i in filtered_song4:
             filtered_song5.append(i)
-        print(filtered_song5)
         return NumericalNotes().match_note_to_a_number(0,0,[],filtered_song5,0)
 
 class NumericalNotes:
@@ -63,45 +59,34 @@ class NumericalNotes:
         flat = False
         for note_index, note in enumerate(filtered_song5):
             self.skip = False
-            print("nuotti", note)
-            #print("indexi", note_index)
-            #print("tää index homma", filtered_song5[note_index-1]) #oikein
             if filtered_song5[note_index-2] == '_' or filtered_song5[note_index-2] == '^':
                 self.skip = True
             elif filtered_song5[note_index-1] == '^':
-                continue #jos edellinen oli ylennys
-            #if filtered_song5[note_index-1] == '_':
-               # continue
+                continue
             if note == '^':
-                    #kutsuu ylennys metodia
                     sharp = True
                     self.next_note_is_sharp(filtered_song5,note, note_index, lista, previous)
             elif note == '_':
-                    #kutsuu alennus metodia
                     self.flat = True
                     self.next_note_is_flat(filtered_song5,note, note_index, lista, previous)
-            #elif note == '=':
-                    #kutsuu palautus metodia
-                    #self.next_note_is_returned(filtered_song5,note, note_index, lista)
             elif note == "'":
-                    #jos nuotti on kolmannessa oktaavissa
                     self.third_octave = True
                     self.previous_note_is_in_third_oktave(filtered_song5,note, note_index, lista, previous)
-            elif note == '(' or note == ')': #ignooraa nämä
+            elif note == '(' or note == ')':
                     continue
-            elif note == '\n': #ignooraa
+            elif note == '\n':
                     continue
-            elif note == ':':  # biisin alku
+            elif note == ':':
                     continue
-            elif note == ']':  # biisin loppu
+            elif note == ']':
                     continue
-            elif note == 'I':  # ignooraa
+            elif note == 'I':
                     continue
-            elif note == '<':  # ignooraa
+            elif note == '<':
                     continue
-            elif note == '>':  # ignooraa
+            elif note == '>':
                     continue
-            elif note == '=':  # ignooraa
+            elif note == '=':
                     sharp = False
                     flat = False
                     continue
@@ -112,16 +97,8 @@ class NumericalNotes:
                     continue
             else:
                 note = self.mapping.get(note)
-                #if note+100 == self.previous and sharp == True and note != None:
-                   # note = note + 100
-                   # self.lista.append(note) 
                 if note is not None and self.skip != True:
-                    self.lista.append(note) 
-                   # print("Jiii")#lisää perus nuotti listaan
-                #elif note+200 == self.previous and flat == True:
-                   # note = note + 200
-                   # self.lista.append(note) 
-
+                    self.lista.append(note)
         return self.lista
 
 
@@ -135,33 +112,27 @@ class NumericalNotes:
 
 
     def next_note_is_sharp(self,filtered_song5,note, note_index, lista, previous):
-       # print("tässä indexi," ,note_index) VANHA
-        note = filtered_song5[note_index+1] #seuraava nuotti ^merkin jälkeen #VANHA
-        extra_case_value = 100 #seuraava nuotti on nuotti + 100 koska ylennys
+        note = filtered_song5[note_index+1]
+        extra_case_value = 100
         self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
 
     def next_note_is_flat(self,filtered_song5,note, note_index, lista, previous):
-        print("Meni tännee", filtered_song5[note_index+1])
-        note = filtered_song5[note_index+1] #seuraava nuotti ^merkin jälkeen #VANHA
-        extra_case_value = 200 #seuraava nuotti on nuotti + 100 koska ylennys
+        note = filtered_song5[note_index+1]
+        extra_case_value = 200
         self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
 
     def next_note_is_returned(self, filtered_song5,note, note_index, lista, previous):
-        #print(note_index)
-        #print(note)
-        note = filtered_song5[note_index+1] #seuraava nuotti = merkin jälkeen
-        extra_case_value = 0 #seuraava nuotti on nuotti + 0 koska palautettu eli mitään ei tapahdu
+        note = filtered_song5[note_index+1]
+        extra_case_value = 0
         self.match_note_to_a_number_in_list(note,note_index,extra_case_value,lista, filtered_song5, previous)
 
     def match_note_to_a_number_in_list(self,note,note_index,extra_case_value,lista, filtered_song5, previous):
-        note = self.mapping.get(note) #hakee seuraavan nuotin arvon
-        print("no mikäs",note)
+        note = self.mapping.get(note)
         if note is not None:
             note += extra_case_value
-            print("no mikäs",note)
             self.lista.append(note) 
             self.previous = note
-        note_index += 2 #indexi hyppää erikoismerkin yli ja sitä seuraavan nuotin yli seuraavaan nuottiin 
+        note_index += 2
         if note_index < len(filtered_song5):
             note = filtered_song5[note_index]
         return note, note_index 

@@ -1,14 +1,10 @@
 import unittest
-from algorithms_and_data_structures.trie_data_structure import Trie
-from algorithms_and_data_structures.markov_chain import MarkovChain
-from logic.parse_abc_notation import NumericalNotes
-from logic.parse_abc_notation import IgnoreSpecialMarks
 from logic.convert_data_to_abc import ConvertToAbc
 
 class TestParseAbc(unittest.TestCase):
     """
     Testaa vastaavatko numerot oikeita abc notaatio merkintöjä.
-    
+
     """
 
     def setUp(self):

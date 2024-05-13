@@ -19,15 +19,14 @@ class ConvertToAbc:
         help = True
         for number in song:
             help = True
-            print("nyt tää",number)
-            if 100 < number < 200: #jos on ylennys
+            if 100 < number < 200:
                 number -= 100
                 note = self.mapping.get(number)
                 if note:
-                    note = "^" + note #lisää mappingilla löydetyn numeron ja siihen perään ^
+                    note = "^" + note
                 abc_song.append(note if note is not None else "") 
                 help = False
-            elif number > 200: #jos on alennus
+            elif number > 200:
                 number -= 200
                 note = self.mapping.get(number)
                 if note:
@@ -49,12 +48,3 @@ class ConvertToAbc:
     def numeric_song_list(self, song):
         self.list_of_songs_numeric.append(song)
         return self.list_of_songs_numeric
-
-#if __name__ == "__main__":
-    #converter = ConvertToAbc()
-    #song = [1, 101, 2, 102, 3, 103, 4, 104, 5, 105, 6, 106, 7, 107]
-    #abc_song = converter.convert_numbers_to_notes(song)
-    #song = [21, 221, 22, 222, 23, 223, 24, 224, 25, 225, 26, 226, 27, 227]
-    #abc_song = converter.convert_numbers_to_notes(song)
-    #song = [1, 2, 3, 4, 5, 6, 7]
-    #abc_song = converter.convert_numbers_to_notes(song)
