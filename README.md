@@ -2,8 +2,9 @@
 
 [Määrittelydokumentti](https://github.com/risla763/tiralabra/blob/main/docs/maarittelydokumentti.md)
 
-[Käyttö ohjeet](https://github.com/risla763/tiralabra/blob/main/docs/kaytto_ohjeet.md)
+[Käyttöohjeet](https://github.com/risla763/tiralabra/blob/main/docs/kaytto_ohjeet.md)
 
+[Tietoa lopullisesta versiosta/ päivitetty määrittely dokumentti](https://github.com/risla763/tiralabra/blob/main/docs/tietoa_lopullisesta_versiosta.md)
 
 [Viikkoraportti 1](https://github.com/risla763/tiralabra/blob/main/docs/viikkoraportti_1.md)
 
