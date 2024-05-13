@@ -13,6 +13,8 @@ Biisin pituus voi olla max 40 merkkiä ja min 2 merkkiä. (TARKISTA)
 
 Biisin aste voi olla mikä vain, mutta liian korkea tai matala aste saattaa vaikuttaa musiikin laatuun.
 
+Myös koodissa mukana on ui niminen kansio, johon aloin tekemään graafista käyttöliittymää, mutta se jäi kesken, joten ignooratkaa se.
+
 # Generoituja biisejä
 
 Tässä pari esimerkki kappaletta, jotka ollaan generoitu tällä ohjelmalla:
